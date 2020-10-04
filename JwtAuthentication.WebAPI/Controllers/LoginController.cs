@@ -9,6 +9,7 @@ namespace JwtAuthentication.WebAPI.Controllers
 {
     public class LoginController : ApiController
     {
+        private static readonly string _sec = "db3OIsj+BXE9NZDy0t8W3TcNekrF+2d/1sFnWG4HnV8TZY30iTOdtVWJG8abWvB1GlOgJuQZdcF2Luqm/hccMw==";
         [HttpPost]
         public IHttpActionResult Authenticate([FromBody] LoginRequest login)
         {
@@ -49,10 +50,8 @@ namespace JwtAuthentication.WebAPI.Controllers
                 new Claim(ClaimTypes.Name, username),
                 new Claim(ClaimTypes.Role, "Admin.Test")
             });
-
-            const string sec = "401b09eab3c013d4ca54922bb802bec8fd5318192b0a75f201d8b3727429090fb337591abd3e44453b954555b7a0812e1081c39b740293f765eae731f5a65ed1";
-
-            var securityKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(sec));
+            
+            var securityKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(_sec));
             var signingCredentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(securityKey, Microsoft.IdentityModel.Tokens.SecurityAlgorithms.HmacSha256Signature);
 
             //create the jwt

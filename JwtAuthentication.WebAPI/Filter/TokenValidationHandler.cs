@@ -13,6 +13,7 @@ namespace JwtAuthentication.WebAPI.Filter
 {
     internal class TokenValidationHandler : DelegatingHandler
     {
+        private static readonly string _sec = "db3OIsj+BXE9NZDy0t8W3TcNekrF+2d/1sFnWG4HnV8TZY30iTOdtVWJG8abWvB1GlOgJuQZdcF2Luqm/hccMw==";
         private static bool TryRetrieveToken(HttpRequestMessage request, out string token)
         {
             token = null;
@@ -40,9 +41,8 @@ namespace JwtAuthentication.WebAPI.Filter
 
             try
             {
-                const string sec = "401b09eab3c013d4ca54922bb802bec8fd5318192b0a75f201d8b3727429090fb337591abd3e44453b954555b7a0812e1081c39b740293f765eae731f5a65ed1";
                 var now = DateTime.UtcNow;
-                var securityKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(sec));
+                var securityKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(_sec));
 
                 var handler = new JwtSecurityTokenHandler();
                 var validationParameters = new TokenValidationParameters()
